@@ -19,7 +19,7 @@
             app:popExitAnim="@anim/nav_default_pop_exit_anim" />
     </fragment>
 
-    <fragment
+    <dialog
         android:id="@+id/searchAddressScreen"
         android:name="uz.star.mytaxi.presentation.screens.main.choose_address.search_address.SearchAddressScreen"
         android:label="SearchAddressScreen"

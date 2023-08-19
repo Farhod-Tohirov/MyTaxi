@@ -2,11 +2,11 @@
     <!-- Base application theme. -->
     <style name="Theme.MyTaxi" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primary_yellow</item>
+        <item name="colorPrimary">@color/black_text_color</item>
         <item name="colorPrimaryVariant">@color/white</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/primary_yellow</item>
+        <item name="colorSecondary">@color/black_text_color</item>
         <item name="colorSecondaryVariant">@color/white</item>
         <item name="colorOnSecondary">@color/black</item>
 
@@ -47,5 +47,17 @@
         <item name="cornerSizeTopLeft">14dp</item>
         <item name="cornerSizeTopRight">14dp</item>
     </style>
+
+    <style name="DialogStyle" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:colorBackground">@android:color/transparent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowSoftInputMode">adjustResize</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:backgroundDimAmount">0.5</item>
+    </style>
+
 
 </resources>

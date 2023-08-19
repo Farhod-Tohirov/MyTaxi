@@ -30,7 +30,9 @@ class ChooseAddressScreen : BaseScreen<ScreenChooseAddressBinding>(R.layout.scre
             parentScreen.setOnCameraIdleListener(viewModel::currentLocationChanged)
         }
 
-        binding.chooseAddressPanel.selectedAddressButton.setOnClickListener { safeNavigate(ChooseAddressScreenDirections.actionTestScreenToSearchAddressScreen()) }
+        binding.chooseAddressPanel.selectedAddressButton.setOnClickListener {
+            safeNavigate(ChooseAddressScreenDirections.actionTestScreenToSearchAddressScreen())
+        }
 
         binding.chooseAddressPanel.navigateMapButton.setOnClickListener {}
     }
