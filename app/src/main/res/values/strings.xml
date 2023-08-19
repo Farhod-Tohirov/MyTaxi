@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">MyTaxi</string>
+    <string name="welcome">Xush kelibsiz</string>
+    <string name="where">Куда?</string>
+</resources>

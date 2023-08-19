@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_screen_nav"
+    app:startDestination="@id/testScreen">
+
+    <fragment
+        android:id="@+id/testScreen"
+        android:name="uz.star.mytaxi.presentation.screens.main.choose_address.ChooseAddressScreen"
+        android:label="TestScreen"
+        tools:layout="@layout/screen_choose_address">
+        <action
+            android:id="@+id/action_testScreen_to_searchAddressScreen"
+            app:destination="@id/searchAddressScreen"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchAddressScreen"
+        android:name="uz.star.mytaxi.presentation.screens.main.choose_address.search_address.SearchAddressScreen"
+        android:label="SearchAddressScreen"
+        tools:layout="@layout/screen_search_address" />
+</navigation>

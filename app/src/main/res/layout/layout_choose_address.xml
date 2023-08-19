@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="4dp"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="170dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <View
+        android:id="@+id/topPin"
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/shape_rounded_2" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        app:cardElevation="2dp"
+        app:shapeAppearance="@style/TopRoundedShape">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/currentAddressButton"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/bg_top_rounded_12"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/middleLine"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:background="#E9E7E7"
+                app:layout_constraintBottom_toTopOf="@id/selectedAddressButton"
+                app:layout_constraintLeft_toLeftOf="@id/currentAddressButton"
+                app:layout_constraintRight_toRightOf="@id/currentAddressButton"
+                app:layout_constraintTop_toBottomOf="@id/currentAddressButton" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icPin"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/currentAddressButton"
+                app:layout_constraintLeft_toLeftOf="@id/currentAddressButton"
+                app:layout_constraintTop_toTopOf="@id/currentAddressButton"
+                app:srcCompat="@drawable/ic_red_pin" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/currentAddress"
+                style="@style/TitleBold.15"
+                android:layout_width="0dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="12dp"
+                android:maxLines="2"
+                android:textColor="@color/text_color_gray"
+                app:layout_constraintBottom_toBottomOf="@id/currentAddressButton"
+                app:layout_constraintLeft_toRightOf="@id/icPin"
+                app:layout_constraintRight_toRightOf="@id/currentAddressButton"
+                app:layout_constraintTop_toTopOf="@id/currentAddressButton"
+                tools:text="5a улица Асадуллы Ходжаева" />
+
+            <View
+                android:id="@+id/selectedAddressButton"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_bottom_rounded_12"
+                app:layout_constraintLeft_toLeftOf="@id/currentAddressButton"
+                app:layout_constraintRight_toRightOf="@id/currentAddressButton"
+                app:layout_constraintTop_toBottomOf="@id/middleLine" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icLocation"
+                android:layout_width="28dp"
+                android:padding="6dp"
+                android:layout_height="28dp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/selectedAddressButton"
+                app:layout_constraintLeft_toLeftOf="@id/selectedAddressButton"
+                app:layout_constraintTop_toTopOf="@id/selectedAddressButton"
+                app:srcCompat="@drawable/ic_location_blue" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/selectedAddress"
+                style="@style/TitleBold.15"
+                android:layout_width="0dp"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="12dp"
+                android:maxLines="2"
+                android:text="@string/where"
+                app:layout_constraintBottom_toBottomOf="@id/selectedAddressButton"
+                app:layout_constraintLeft_toRightOf="@id/icPin"
+                app:layout_constraintRight_toRightOf="@id/selectedAddressButton"
+                app:layout_constraintTop_toTopOf="@id/selectedAddressButton" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:background="#CBCBCB"
+                app:layout_constraintBottom_toBottomOf="@id/icLocation"
+                app:layout_constraintRight_toLeftOf="@id/navigateMapButton"
+                app:layout_constraintTop_toTopOf="@id/icLocation" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/navigateMapButton"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="?android:selectableItemBackground"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                app:layout_constraintBottom_toBottomOf="@id/selectedAddressButton"
+                app:layout_constraintRight_toRightOf="@id/selectedAddressButton"
+                app:layout_constraintTop_toTopOf="@id/selectedAddressButton"
+                app:srcCompat="@drawable/ic_navigate" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</FrameLayout>
