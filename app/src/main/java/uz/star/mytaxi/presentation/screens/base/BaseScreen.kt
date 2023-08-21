@@ -50,7 +50,6 @@ abstract class BaseScreen<T : ViewBinding>(@LayoutRes layout: Int, vbFactory: (V
 
         hideLoader()
 
-        loadCountryColors()
         loadViews()
         loadObservers()
         loadDefaultObservers()
@@ -60,7 +59,6 @@ abstract class BaseScreen<T : ViewBinding>(@LayoutRes layout: Int, vbFactory: (V
     open fun onDestroyScreenUI() {}
     open fun onStartScreen() {}
     open fun loadViews() {}
-    open fun loadCountryColors() {}
     open fun loadObservers() {}
 
     private fun loadDefaultObservers() {

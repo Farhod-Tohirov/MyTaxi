@@ -2,4 +2,10 @@
     <string name="app_name">MyTaxi</string>
     <string name="welcome">Xush kelibsiz</string>
     <string name="where">Куда?</string>
+    <string name="to_where">Куда?</string>
+    <string name="selected_address">Избранные адреса</string>
+    <string name="cash">Наличными</string>
+    <string name="schedule">Запланировать</string>
+    <string name="wishes">Пожелания</string>
+    <string name="order">Заказать</string>
 </resources>

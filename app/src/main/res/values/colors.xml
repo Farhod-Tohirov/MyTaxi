@@ -15,5 +15,7 @@
     <color name="input">#F9F9F9</color>
     <color name="text_color_gray">#B0B0B0</color>
     <color name="blue">#387BF6</color>
+    <color name="divider">#EFEDED</color>
+    <color name="text_color_grey">#999999</color>
 
 </resources>

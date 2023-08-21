@@ -1,6 +1,9 @@
 package uz.star.mytaxi.domain.address.impl
 
+import uz.star.mytaxi.data.entities.address.AddressData
 import uz.star.mytaxi.data.entities.address.LocationData
+import uz.star.mytaxi.data.entities.address.SelectedAddressData
+import uz.star.mytaxi.data.repository.search_address.SearchAddressRepository
 import uz.star.mytaxi.domain.address.AddressesUseCase
 import javax.inject.Inject
 
@@ -9,9 +12,18 @@ import javax.inject.Inject
  **/
 
 class AddressesUseCaseImpl @Inject constructor(
-
+    private val remoteRepository: SearchAddressRepository
 ) : AddressesUseCase {
 
-    override suspend fun getAddressNameByLocation(locationData: LocationData): String = "$locationData"
+    override suspend fun searchSingleLocationAddress(locationData: LocationData): AddressData {
+        val address = remoteRepository.searchSingleLocationAddress(locationData = locationData)
+        address.location = locationData
+        return address
+    }
 
+    override suspend fun getAddressesByName(locationName: String, locationData: LocationData): List<AddressData> =
+        remoteRepository.searchAddressByName(name = locationName, locationData = locationData, limit = 20)
+
+    override suspend fun getSelectedAddresses(): List<SelectedAddressData> =
+        remoteRepository.getSelectedAddresses()
 }

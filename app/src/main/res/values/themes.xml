@@ -20,11 +20,45 @@
         <item name="android:forceDarkAllowed" tools:ignore="NewApi">false</item>
     </style>
 
+    <style name="TitleBlack">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/lato_black_900</item>
+        <item name="android:textColor">@color/black_text_color</item>
+    </style>
+
+    <style name="TitleBlack.20">
+        <item name="android:textSize">20sp</item>
+        <item name="lineHeight">24dp</item>
+    </style>
+
+    <style name="TitleSemiBold">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/lato_semi_bold_600</item>
+        <item name="android:textColor">@color/black_text_color</item>
+    </style>
+
+    <style name="TitleSemiBold.12">
+        <item name="android:textSize">12sp</item>
+        <item name="lineHeight">14dp</item>
+    </style>
+
     <style name="TitleBold">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/lato_bold_700</item>
         <item name="android:textColor">@color/black_text_color</item>
+    </style>
+
+    <style name="TitleBold.12">
+        <item name="android:textSize">12sp</item>
+        <item name="lineHeight">14dp</item>
+    </style>
+
+    <style name="TitleBold.14">
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">17dp</item>
     </style>
 
     <style name="TitleBold.15">
@@ -37,8 +71,24 @@
         <item name="lineHeight">19dp</item>
     </style>
 
+    <style name="TitleBold.17">
+        <item name="android:textSize">17sp</item>
+    </style>
+
     <style name="TitleBold.18">
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextRegular">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/lato_regular_400</item>
+        <item name="android:textColor">@color/black_text_color</item>
+    </style>
+
+    <style name="TextRegular.12">
+        <item name="android:textSize">12sp</item>
+        <item name="lineHeight">15dp</item>
     </style>
 
     <style name="TopRoundedShape">

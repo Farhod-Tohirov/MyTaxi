@@ -5,6 +5,7 @@ plugins {
     id 'kotlin-kapt'
     id "androidx.navigation.safeargs.kotlin"
     id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -17,6 +18,8 @@ android {
         targetSdk 34
         versionCode 1
         versionName "1.0"
+
+        buildConfigField('String', 'BASE_URL', '"https://apitest.mytaxi.uz/"')
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -110,6 +113,17 @@ dependencies {
      *   Android Runtime Permission Library
      */
     implementation 'com.nabinbhandari.android:permissions:3.8'
+
+    /**
+     * Corbind
+     * */
+    implementation("ru.ldralighieri.corbind:corbind-appcompat:1.8.0")
+
+    /**
+     * Shimmer for Android
+     * */
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 }
 
 kapt {

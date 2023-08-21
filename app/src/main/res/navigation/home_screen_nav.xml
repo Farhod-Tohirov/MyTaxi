@@ -12,16 +12,52 @@
         tools:layout="@layout/screen_choose_address">
         <action
             android:id="@+id/action_testScreen_to_searchAddressScreen"
-            app:destination="@id/searchAddressScreen"
-            app:enterAnim="@anim/nav_default_enter_anim"
-            app:exitAnim="@anim/nav_default_exit_anim"
-            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
-            app:popExitAnim="@anim/nav_default_pop_exit_anim" />
+            app:destination="@id/searchAddressScreen" />
+        <action
+            android:id="@+id/action_testScreen_to_confirmOrderScreen"
+            app:destination="@id/confirmOrderScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <dialog
         android:id="@+id/searchAddressScreen"
         android:name="uz.star.mytaxi.presentation.screens.main.choose_address.search_address.SearchAddressScreen"
         android:label="SearchAddressScreen"
-        tools:layout="@layout/screen_search_address" />
+        tools:layout="@layout/screen_search_address">
+
+        <argument
+            android:name="selected_address_name"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="current_location"
+            app:argType="uz.star.mytaxi.data.entities.address.LocationData"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_searchAddressScreen_to_selectedAddressScreen"
+            app:destination="@id/selectedAddressScreen" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/selectedAddressScreen"
+        android:name="uz.star.mytaxi.presentation.screens.main.choose_address.selected_address.SelectedAddressScreen"
+        android:label="SelectedAddressScreen"
+        tools:layout="@layout/screen_selected_address" />
+    <fragment
+        android:id="@+id/confirmOrderScreen"
+        android:name="uz.star.mytaxi.presentation.screens.main.confirm_order.ConfirmOrderScreen"
+        android:label="ConfirmOrderScreen"
+        tools:layout="@layout/screen_confirm_order">
+
+        <argument
+            android:name="current_address"
+            app:argType="uz.star.mytaxi.data.entities.address.AddressData" />
+
+        <argument
+            android:name="selected_address"
+            app:argType="uz.star.mytaxi.data.entities.address.AddressData" />
+    </fragment>
 </navigation>

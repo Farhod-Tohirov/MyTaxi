@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="85dp"
+    android:layout_marginEnd="8dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    tools:background="@drawable/bg_selected_car">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/image"
+        android:layout_width="100dp"
+        android:layout_height="45dp"
+        tools:src="@drawable/ic_car_type_economy" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/title"
+        style="@style/TitleBold.12"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="-4dp"
+        android:textColor="#858585"
+        tools:text="Эконом" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/price"
+        style="@style/TitleBold.14"
+        android:layout_marginStart="12dp"
+        tools:text="14 900 cум" />
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>
