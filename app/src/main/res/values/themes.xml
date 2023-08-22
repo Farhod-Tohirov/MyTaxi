@@ -113,5 +113,26 @@
         <item name="android:backgroundDimAmount">0.5</item>
     </style>
 
+    <style name="SearchInputLayout" parent="TitleBold.16">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/bg_input_layout</item>
+        <item name="android:drawablePadding">12dp</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:imeOptions">actionDone</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">32dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColor">@color/black_text_color</item>
+    </style>
+
+    <style name="SearchInputFromMapButton">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/rounded_with_stroke</item>
+        <item name="android:elevation">4dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="srcCompat">@drawable/ic_gps</item>
+    </style>
 
 </resources>
