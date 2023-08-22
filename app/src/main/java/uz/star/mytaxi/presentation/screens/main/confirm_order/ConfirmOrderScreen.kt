@@ -82,11 +82,6 @@ class ConfirmOrderScreen : BaseScreen<ScreenConfirmOrderBinding>(R.layout.screen
 
     private val currentAddressDataObserver = Observer<AddressData> { addressData ->
         binding.currentAddress.text = addressData.addressName
-        addressData.location?.let {
-            val markerOptions = MarkerOptions().position(LatLng(it.lat, it.long))
-            markerOptions.icon(bitmapDescriptorFromVector(R.drawable.ic_location_red))
-            parentScreen.addMarker(markerOptions)
-        }
     }
 
     private val selectedAddressesDataObserver = Observer<List<AddressData>> { addressesList ->
@@ -95,12 +90,6 @@ class ConfirmOrderScreen : BaseScreen<ScreenConfirmOrderBinding>(R.layout.screen
         } else {
             binding.selectedAddress.text = getString(R.string.address_count, addressesList.size)
         }
-        val addressData = addressesList.firstOrNull() ?: return@Observer
-        addressData.location?.let {
-            val markerOptions = MarkerOptions().position(LatLng(it.lat, it.long))
-            markerOptions.icon(bitmapDescriptorFromVector(R.drawable.ic_location_blue))
-            parentScreen.addMarker(markerOptions)
-        }
     }
 
     private val orderTypesListObserver = Observer<List<CarOrderTypeData>> {
@@ -108,6 +97,15 @@ class ConfirmOrderScreen : BaseScreen<ScreenConfirmOrderBinding>(R.layout.screen
     }
 
     private val pathBetweenLocationsObserver = Observer<List<LatLng>> {
+        val startPoint = MarkerOptions().position(it.firstOrNull() ?: return@Observer)
+        startPoint.icon(bitmapDescriptorFromVector(R.drawable.ic_location_red))
+        parentScreen.addMarker(startPoint)
+
+        val endPoint = MarkerOptions().position(it.last())
+        endPoint.icon(bitmapDescriptorFromVector(R.drawable.ic_location_blue))
+        parentScreen.addMarker(endPoint)
+
+
         val lineOptions = PolylineOptions()
         lineOptions.addAll(it)
         lineOptions.color(ResourcesCompat.getColor(resources, R.color.poly_line_color, null))
