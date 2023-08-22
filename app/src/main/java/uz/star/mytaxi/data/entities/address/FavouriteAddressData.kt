@@ -9,14 +9,14 @@ import uz.star.mytaxi.utils.helpers.network.DataMapper
  **/
 
 @Parcelize
-data class SelectedAddressData(
+data class FavouriteAddressData(
     val id: Int,
     val addressName: String,
     val formattedAddressName: String,
     val icon: Int,
     val locationData: LocationData
-) : Parcelable, DataMapper<SelectedAddressData, AddressData> {
-    override fun SelectedAddressData.mapToDomain(): AddressData =
+) : Parcelable, DataMapper<FavouriteAddressData, AddressData> {
+    override fun FavouriteAddressData.mapToDomain(): AddressData =
         AddressData(
             addressId = id,
             streetPoiId = 0,

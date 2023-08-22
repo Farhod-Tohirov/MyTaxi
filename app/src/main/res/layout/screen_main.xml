@@ -12,18 +12,6 @@
         android:layout_height="match_parent"
         tools:layout="@layout/mock_layout_map" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/pin"
-        android:layout_width="38dp"
-        android:layout_height="60dp"
-        android:layout_marginBottom="55dp"
-        android:adjustViewBounds="true"
-        app:layout_constraintBottom_toBottomOf="@id/map"
-        app:layout_constraintLeft_toLeftOf="@id/map"
-        app:layout_constraintRight_toRightOf="@id/map"
-        app:layout_constraintTop_toTopOf="@id/map"
-        app:srcCompat="@drawable/ic_map_pin" />
-
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/mainScreenContainerView"
         android:name="androidx.navigation.fragment.NavHostFragment"

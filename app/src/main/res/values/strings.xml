@@ -1,11 +1,19 @@
 <resources>
     <string name="app_name">MyTaxi</string>
     <string name="welcome">Xush kelibsiz</string>
-    <string name="where">Куда?</string>
     <string name="to_where">Куда?</string>
     <string name="selected_address">Избранные адреса</string>
     <string name="cash">Наличными</string>
     <string name="schedule">Запланировать</string>
     <string name="wishes">Пожелания</string>
     <string name="order">Заказать</string>
+    <string name="error">Ошибка</string>
+    <string name="ok">Ок</string>
+    <string name="failure_500">(500) Ошибка при подключении. Приносим свои извинения, ведутся технические работы на сервере. Скоро всё заработает.</string>
+    <string name="failure">Ошибка при подключении. Приносим свои извинения, ведутся технические работы на сервере. Скоро всё заработает.</string>
+    <string name="no_internet_connection">Нет подключения к интернету. Проверьте подключение к сети и повторите попытку.</string>
+    <string name="slow_internet">Ошибка подключения. Проверьте подключение к интернету.</string>
+    <string name="confirm">Подтвердить</string>
+    <string name="address_count">%1$d адресса</string>
+    <string name="add_point">Добавить остановку</string>
 </resources>

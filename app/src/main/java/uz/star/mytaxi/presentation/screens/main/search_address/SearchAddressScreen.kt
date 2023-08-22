@@ -1,8 +1,11 @@
-package uz.star.mytaxi.presentation.screens.main.choose_address.search_address
+package uz.star.mytaxi.presentation.screens.main.search_address
 
 import android.app.Dialog
 import android.os.Bundle
 import androidx.core.os.bundleOf
+import androidx.fragment.app.clearFragmentResultListener
+import androidx.fragment.app.setFragmentResult
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.flowWithLifecycle
@@ -17,14 +20,13 @@ import kotlinx.coroutines.flow.onEach
 import ru.ldralighieri.corbind.widget.textChanges
 import uz.star.mytaxi.R
 import uz.star.mytaxi.data.entities.address.AddressData
-import uz.star.mytaxi.data.entities.address.SelectedAddressData
+import uz.star.mytaxi.data.entities.address.FavouriteAddressData
 import uz.star.mytaxi.databinding.ScreenSearchAddressBinding
 import uz.star.mytaxi.presentation.adapters.seach_address.SearchAddressAdapter
 import uz.star.mytaxi.presentation.adapters.seach_address.SearchAddressShimmerAdapter
 import uz.star.mytaxi.presentation.screens.base.BaseScreenDialog
-import uz.star.mytaxi.presentation.screens.main.choose_address.search_address.viewmodel.SearchAddressViewModel
-import uz.star.mytaxi.presentation.screens.main.choose_address.search_address.viewmodel.impl.SearchAddressViewModelImpl
-import uz.star.mytaxi.presentation.screens.main.choose_address.selected_address.SelectedAddressScreen
+import uz.star.mytaxi.presentation.screens.main.search_address.viewmodel.SearchAddressViewModel
+import uz.star.mytaxi.presentation.screens.main.search_address.viewmodel.impl.SearchAddressViewModelImpl
 import uz.star.mytaxi.utils.extensions.*
 import uz.star.mytaxi.utils.helpers.Const
 import uz.star.mytaxi.utils.helpers.network.mapToDomain
@@ -59,7 +61,7 @@ class SearchAddressScreen : BaseScreenDialog<ScreenSearchAddressBinding>(R.layou
             searchAddressShimmerAdapter
         )
 
-        binding.currentLocationSection.setOnFocusChangeListener { _, hasFocus ->
+        /*binding.currentLocationSection.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 binding.currentLocationSection.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, R.drawable.ic_close, 0)
                 binding.currentLocationMapButton.show()
@@ -67,7 +69,7 @@ class SearchAddressScreen : BaseScreenDialog<ScreenSearchAddressBinding>(R.layou
                 binding.currentLocationSection.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_location_red, 0, 0, 0)
                 binding.currentLocationMapButton.hide()
             }
-        }
+        }*/
 
         binding.selectedLocationSection.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -87,15 +89,27 @@ class SearchAddressScreen : BaseScreenDialog<ScreenSearchAddressBinding>(R.layou
             }.flowWithLifecycle(lifecycle)
             .launchIn(lifecycleScope)
 
-        binding.selectedLocationMapButton.setOnClickListener { }
         binding.currentLocationMapButton.setOnClickListener { }
+
+        binding.selectedLocationMapButton.setOnClickListener {
+            safeNavigate(SearchAddressScreenDirections.actionSearchAddressScreenToChooseAddressManualScreen())
+        }
+
+        setFragmentResultListener(Const.manualSelectedAddress) { _, bundle ->
+            clearFragmentResultListener(Const.manualSelectedAddress)
+            val manualSelectedAddress = bundle.parcelable<AddressData>(Const.manualSelectedAddress)
+            manualSelectedAddress?.let {
+                setBackStackDataAndClose(addressData = manualSelectedAddress)
+            }
+        }
 
         binding.bookmark.setOnClickListener { safeNavigate(SearchAddressScreenDirections.actionSearchAddressScreenToSelectedAddressScreen()) }
 
-        getBackStackLiveData(SelectedAddressScreen::class.java.name) { bundle ->
-            val selectedAddressData = bundle.parcelable<SelectedAddressData>(Const.selectedAddress)
-            selectedAddressData?.let {
-                setBackStackDataAndClose(addressData = selectedAddressData.mapToDomain())
+        setFragmentResultListener(Const.chooseFromFavouriteAddress) { _, bundle ->
+            clearFragmentResultListener(Const.chooseFromFavouriteAddress)
+            val favouriteAddressData = bundle.parcelable<FavouriteAddressData>(Const.chooseFromFavouriteAddress)
+            favouriteAddressData?.let {
+                setBackStackDataAndClose(addressData = favouriteAddressData.mapToDomain())
             }
         }
 
@@ -105,10 +119,7 @@ class SearchAddressScreen : BaseScreenDialog<ScreenSearchAddressBinding>(R.layou
     }
 
     private fun setBackStackDataAndClose(addressData: AddressData) {
-        setBackStackLiveData(
-            title = SearchAddressScreen::class.java.name,
-            bundle = bundleOf(Const.selectedAddress to addressData)
-        )
+        setFragmentResult(Const.selectedAddress, result = bundleOf(Const.selectedAddress to addressData))
         closeScreen()
     }
 

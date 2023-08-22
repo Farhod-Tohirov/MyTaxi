@@ -1,4 +1,4 @@
-package uz.star.mytaxi.presentation.screens.main.choose_address.search_address.viewmodel.impl
+package uz.star.mytaxi.presentation.screens.main.search_address.viewmodel.impl
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -6,8 +6,8 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import uz.star.mytaxi.data.entities.address.AddressData
 import uz.star.mytaxi.domain.address.AddressesUseCase
-import uz.star.mytaxi.presentation.screens.main.choose_address.search_address.SearchAddressScreenArgs
-import uz.star.mytaxi.presentation.screens.main.choose_address.search_address.viewmodel.SearchAddressViewModel
+import uz.star.mytaxi.presentation.screens.main.search_address.SearchAddressScreenArgs
+import uz.star.mytaxi.presentation.screens.main.search_address.viewmodel.SearchAddressViewModel
 import uz.star.mytaxi.utils.helpers.AddressNotFoundException
 import javax.inject.Inject
 

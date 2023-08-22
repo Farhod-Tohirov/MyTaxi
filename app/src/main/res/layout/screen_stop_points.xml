@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/bg_top_rounded_18"
+    android:backgroundTint="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/topPin"
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:layout_marginTop="6dp"
+        android:background="@drawable/shape_rounded_2"
+        android:backgroundTint="@color/light_gray" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/stopPointsList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/bg_rounded_12"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="2"
+        tools:listitem="@layout/item_stop_point" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/addPointButton"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_rounded_12"
+        android:gravity="center_vertical">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/rounded_shape"
+            android:padding="6dp"
+            app:backgroundTint="#787878"
+            app:srcCompat="@drawable/ic_plus"
+            app:tint="#FCFCFC" />
+
+        <com.google.android.material.textview.MaterialTextView
+            style="@style/TitleBold.15"
+            android:layout_marginStart="8dp"
+            android:text="@string/add_point" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

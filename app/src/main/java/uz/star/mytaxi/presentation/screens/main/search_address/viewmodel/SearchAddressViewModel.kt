@@ -1,4 +1,4 @@
-package uz.star.mytaxi.presentation.screens.main.choose_address.search_address.viewmodel
+package uz.star.mytaxi.presentation.screens.main.search_address.viewmodel
 
 import androidx.lifecycle.LiveData
 import uz.star.mytaxi.data.entities.address.AddressData

@@ -13,6 +13,8 @@ abstract class ChooseAddressViewModel : BaseViewModel() {
 
     abstract val currentLocationName: LiveData<String>
 
+    abstract val selectedLocationName: LiveData<String>
+
     abstract val currentLocation: AddressData?
 
     abstract val navigateConfirmOrderScreen: LiveData<AddressData>

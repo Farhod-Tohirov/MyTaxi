@@ -20,6 +20,11 @@ data class AddressData(
     var location: LocationData?
 ) : Parcelable
 
+@Parcelize
+data class AddressDataList(
+    val list: List<AddressData>
+) : Parcelable
+
 data class AddressListResponseData(
     @SerializedName("candidates")
     val candidates: List<AddressResponseData>

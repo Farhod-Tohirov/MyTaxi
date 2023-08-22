@@ -15,6 +15,17 @@
         android:padding="10dp"
         app:srcCompat="@drawable/ic_menu" />
 
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/pin"
+        android:layout_width="38dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="55dp"
+        android:adjustViewBounds="true"
+        app:srcCompat="@drawable/ic_map_pin" />
+
+
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/navigateCurrentLocationButton"
         android:layout_width="40dp"

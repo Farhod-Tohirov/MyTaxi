@@ -1,5 +1,7 @@
 package uz.star.mytaxi.presentation.screens.main.choose_address
 
+import androidx.fragment.app.clearFragmentResultListener
+import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import dagger.hilt.android.AndroidEntryPoint
@@ -8,10 +10,8 @@ import uz.star.mytaxi.data.entities.address.AddressData
 import uz.star.mytaxi.databinding.ScreenChooseAddressBinding
 import uz.star.mytaxi.presentation.screens.base.BaseScreen
 import uz.star.mytaxi.presentation.screens.main.MainScreen
-import uz.star.mytaxi.presentation.screens.main.choose_address.search_address.SearchAddressScreen
 import uz.star.mytaxi.presentation.screens.main.choose_address.viewmodel.ChooseAddressViewModel
 import uz.star.mytaxi.presentation.screens.main.choose_address.viewmodel.impl.ChooseAddressViewModelImpl
-import uz.star.mytaxi.utils.extensions.getBackStackLiveData
 import uz.star.mytaxi.utils.extensions.parcelable
 import uz.star.mytaxi.utils.helpers.Const
 
@@ -27,42 +27,47 @@ class ChooseAddressScreen : BaseScreen<ScreenChooseAddressBinding>(R.layout.scre
     private val parentScreen: MainScreen by lazy { requireParentFragment().requireParentFragment() as MainScreen }
 
     override fun loadViews() {
-        parentScreen.onMapReady {
-            binding.navigateCurrentLocationButton.setOnClickListener {
-                parentScreen.navigateUserLocation()
-            }
-
-            parentScreen.setOnCameraIdleListener(viewModel::currentLocationChanged)
+        binding.navigateCurrentLocationButton.setOnClickListener {
+            parentScreen.navigateUserLocation()
         }
+
+        parentScreen.setOnCameraIdleListener(viewModel::currentLocationChanged)
 
         binding.chooseAddressPanel.selectedAddressButton.setOnClickListener {
             safeNavigate(
-                ChooseAddressScreenDirections.actionTestScreenToSearchAddressScreen(
+                ChooseAddressScreenDirections.actionMainScreenToSearchAddressScreen(
                     selectedAddressName = viewModel.currentLocationName.value,
                     currentLocation = viewModel.currentLocation?.location
                 )
             )
         }
 
-        getBackStackLiveData(title = SearchAddressScreen::class.java.name) { bundle ->
-            val selectedAddressData = bundle.parcelable<AddressData>(Const.selectedAddress)
-
-            binding.chooseAddressPanel.selectedAddress.text = selectedAddressData?.addressName
-
-            viewModel.selectedLocationChanged(addressData = selectedAddressData)
+        binding.chooseAddressPanel.navigateMapButton.setOnClickListener {
+            safeNavigate(ChooseAddressScreenDirections.actionMainScreenToChooseAddressManualScreen())
         }
 
-        binding.chooseAddressPanel.navigateMapButton.setOnClickListener {}
+        setFragmentResultListener(Const.selectedAddress) { _, bundle ->
+            clearFragmentResultListener(Const.selectedAddress)
+            val selectedAddressData = bundle.parcelable<AddressData>(Const.selectedAddress)
+            viewModel.selectedLocationChanged(selectedAddressData)
+        }
+
+        setFragmentResultListener(Const.manualSelectedAddress) { _, bundle ->
+            clearFragmentResultListener(Const.manualSelectedAddress)
+            val selectedAddressData = bundle.parcelable<AddressData>(Const.manualSelectedAddress)
+            viewModel.selectedLocationChanged(selectedAddressData)
+        }
     }
 
     override fun loadObservers() {
         viewModel.currentLocationName.observe(viewLifecycleOwner, currentLocationNameObserver)
+        viewModel.selectedLocationName.observe(viewLifecycleOwner, selectedLocationNameObserver)
         viewModel.navigateConfirmOrderScreen.observe(this, navigateConfirmOrderScreenObserver)
     }
 
     private val navigateConfirmOrderScreenObserver = Observer<AddressData> { selectedAddress ->
         safeNavigate(
-            ChooseAddressScreenDirections.actionTestScreenToConfirmOrderScreen(
+            ChooseAddressScreenDirections.actionMainScreenToConfirmOrderScreen(
                 currentAddress = viewModel.currentLocation ?: return@Observer,
                 selectedAddress = selectedAddress
             )
@@ -73,7 +78,7 @@ class ChooseAddressScreen : BaseScreen<ScreenChooseAddressBinding>(R.layout.scre
         binding.chooseAddressPanel.currentAddress.text = it
     }
 
-    override fun onDestroyScreenUI() {
-        parentScreen.removeMapCameraMoveListeners()
+    private val selectedLocationNameObserver = Observer<String> {
+        binding.chooseAddressPanel.selectedAddress.text = it
     }
 }

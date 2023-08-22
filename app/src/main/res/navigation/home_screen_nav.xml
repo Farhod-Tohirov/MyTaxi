@@ -3,19 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/home_screen_nav"
-    app:startDestination="@id/testScreen">
+    app:startDestination="@id/mainScreen">
 
     <fragment
-        android:id="@+id/testScreen"
+        android:id="@+id/mainScreen"
         android:name="uz.star.mytaxi.presentation.screens.main.choose_address.ChooseAddressScreen"
-        android:label="TestScreen"
+        android:label="MainScreen"
         tools:layout="@layout/screen_choose_address">
         <action
-            android:id="@+id/action_testScreen_to_searchAddressScreen"
+            android:id="@+id/action_mainScreen_to_searchAddressScreen"
             app:destination="@id/searchAddressScreen" />
         <action
-            android:id="@+id/action_testScreen_to_confirmOrderScreen"
+            android:id="@+id/action_mainScreen_to_confirmOrderScreen"
             app:destination="@id/confirmOrderScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_mainScreen_to_chooseAddressManualScreen"
+            app:destination="@id/chooseAddressManualScreen"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -24,7 +31,7 @@
 
     <dialog
         android:id="@+id/searchAddressScreen"
-        android:name="uz.star.mytaxi.presentation.screens.main.choose_address.search_address.SearchAddressScreen"
+        android:name="uz.star.mytaxi.presentation.screens.main.search_address.SearchAddressScreen"
         android:label="SearchAddressScreen"
         tools:layout="@layout/screen_search_address">
 
@@ -39,11 +46,18 @@
         <action
             android:id="@+id/action_searchAddressScreen_to_selectedAddressScreen"
             app:destination="@id/selectedAddressScreen" />
+        <action
+            android:id="@+id/action_searchAddressScreen_to_chooseAddressManualScreen"
+            app:destination="@id/chooseAddressManualScreen"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </dialog>
 
     <dialog
         android:id="@+id/selectedAddressScreen"
-        android:name="uz.star.mytaxi.presentation.screens.main.choose_address.selected_address.SelectedAddressScreen"
+        android:name="uz.star.mytaxi.presentation.screens.main.favourite_address.FavouriteAddressScreen"
         android:label="SelectedAddressScreen"
         tools:layout="@layout/screen_selected_address" />
     <fragment
@@ -59,5 +73,51 @@
         <argument
             android:name="selected_address"
             app:argType="uz.star.mytaxi.data.entities.address.AddressData" />
+        <action
+            android:id="@+id/action_confirmOrderScreen_to_addStopPointScreen"
+            app:destination="@id/addStopPointScreen" />
+        <action
+            android:id="@+id/action_confirmOrderScreen_to_stopPointsScreen"
+            app:destination="@id/stopPointsScreen" />
     </fragment>
+    <fragment
+        android:id="@+id/chooseAddressManualScreen"
+        android:name="uz.star.mytaxi.presentation.screens.main.choose_address_manual.ChooseAddressManualScreen"
+        android:label="ChooseAddressManualScreen"
+        tools:layout="@layout/screen_choose_address_manual" />
+    <dialog
+        android:id="@+id/addStopPointScreen"
+        android:name="uz.star.mytaxi.presentation.screens.main.confirm_order.add_stop_point.AddStopPointScreen"
+        android:label="AddStopPointScreen"
+        tools:layout="@layout/screen_add_stop_point">
+        <action
+            android:id="@+id/action_addStopPointScreen_to_selectedAddressScreen"
+            app:destination="@id/selectedAddressScreen" />
+        <argument
+            android:name="current_location"
+            app:argType="uz.star.mytaxi.data.entities.address.LocationData"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_addStopPointScreen_to_chooseAddressManualScreen"
+            app:destination="@id/chooseAddressManualScreen" />
+    </dialog>
+    <dialog
+        android:id="@+id/stopPointsScreen"
+        android:name="uz.star.mytaxi.presentation.screens.main.confirm_order.stop_points.StopPointsScreen"
+        android:label="StopPointsScreen"
+        tools:layout="@layout/screen_stop_points">
+        <argument
+            android:name="addresses"
+            app:argType="uz.star.mytaxi.data.entities.address.AddressDataList"
+            app:nullable="true" />
+        <argument
+            android:name="current_location"
+            app:argType="uz.star.mytaxi.data.entities.address.LocationData"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_stopPointsScreen_to_addStopPointScreen"
+            app:destination="@id/addStopPointScreen"
+            app:popUpTo="@id/stopPointsScreen"
+            app:popUpToInclusive="true" />
+    </dialog>
 </navigation>

@@ -1,10 +1,12 @@
 package uz.star.mytaxi.domain.address.impl
 
 import uz.star.mytaxi.data.entities.address.AddressData
+import uz.star.mytaxi.data.entities.address.FavouriteAddressData
 import uz.star.mytaxi.data.entities.address.LocationData
-import uz.star.mytaxi.data.entities.address.SelectedAddressData
+import uz.star.mytaxi.data.entities.confirm_order.CarOrderTypeData
 import uz.star.mytaxi.data.repository.search_address.SearchAddressRepository
 import uz.star.mytaxi.domain.address.AddressesUseCase
+import uz.star.mytaxi.utils.helpers.FakeData
 import javax.inject.Inject
 
 /**
@@ -24,6 +26,8 @@ class AddressesUseCaseImpl @Inject constructor(
     override suspend fun getAddressesByName(locationName: String, locationData: LocationData): List<AddressData> =
         remoteRepository.searchAddressByName(name = locationName, locationData = locationData, limit = 20)
 
-    override suspend fun getSelectedAddresses(): List<SelectedAddressData> =
-        remoteRepository.getSelectedAddresses()
+    override suspend fun getFavouriteAddresses(): List<FavouriteAddressData> =
+        remoteRepository.getFavouriteAddressList()
+
+    override suspend fun getOrderTypes(): List<CarOrderTypeData> = FakeData.carOrderTypesList
 }

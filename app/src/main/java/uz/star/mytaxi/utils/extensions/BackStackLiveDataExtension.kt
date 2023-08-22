@@ -17,7 +17,7 @@ fun Fragment.setBackStackLiveData(title: String, bundle: Bundle, navController: 
 }
 
 fun Fragment.getBackStackLiveData(title: String, navController: NavController = findNavController(), block: SingleBlock<Bundle>) {
-    navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(title)?.observe(viewLifecycleOwner) {
+    navController.currentBackStackEntry?.savedStateHandle?.getLiveData<Bundle>(title)?.observe(this) {
         block(it)
         navController.currentBackStackEntry?.savedStateHandle?.remove<Bundle>(title)
     }

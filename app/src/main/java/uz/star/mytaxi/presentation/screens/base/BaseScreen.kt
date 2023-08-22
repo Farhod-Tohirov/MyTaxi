@@ -1,5 +1,6 @@
 package uz.star.mytaxi.presentation.screens.base
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.IdRes
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.widget.ViewPager2
 import by.kirich1409.viewbindingdelegate.viewBinding
+import uz.star.mytaxi.R
 import uz.star.mytaxi.presentation.MainActivity
 import uz.star.mytaxi.utils.extensions.showLog
 import uz.star.mytaxi.utils.helpers.ResourceProvider
@@ -79,7 +81,16 @@ abstract class BaseScreen<T : ViewBinding>(@LayoutRes layout: Int, vbFactory: (V
     }
 
     open val errorObserver = Observer<Throwable> { throwable ->
+        val message = resourceProvider.getString(throwable = throwable, context = requireContext())
+        showErrorMessage(errorMessage = message)
+    }
 
+    open fun showErrorMessage(errorMessage: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle(R.string.error)
+            .setMessage(errorMessage)
+            .setPositiveButton(R.string.ok) { dialog, _ -> dialog.dismiss() }
+            .show()
     }
 
     open fun safeNavigate(@IdRes resId: Int) {

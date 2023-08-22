@@ -16,9 +16,7 @@ import uz.star.mytaxi.presentation.screens.base.BaseScreenLocation
 import uz.star.mytaxi.presentation.screens.main.viewmodel.MainViewModel
 import uz.star.mytaxi.presentation.screens.main.viewmodel.impl.MainViewModelImpl
 import uz.star.mytaxi.utils.extensions.*
-import uz.star.mytaxi.utils.helpers.EmptyBlock
 import uz.star.mytaxi.utils.helpers.SingleBlock
-import kotlin.properties.Delegates
 
 /**
  * Created by Farhod Tohirov on 19-August-2023, 09:51
@@ -29,11 +27,9 @@ class MainScreen : BaseScreenLocation<ScreenMainBinding>(R.layout.screen_main, S
 
     override val viewModel: MainViewModel by viewModels<MainViewModelImpl>()
 
-    private var googleMap: GoogleMap by Delegates.notNull()
+    private lateinit var googleMap: GoogleMap
 
     private var cameraCenterChangeListener: SingleBlock<LatLng>? = null
-
-    private var onMapReadyListener: EmptyBlock? = null
 
     override fun loadViews() {
         changeStatusBarAppearance(isLight = false)
@@ -47,7 +43,10 @@ class MainScreen : BaseScreenLocation<ScreenMainBinding>(R.layout.screen_main, S
     @SuppressLint("MissingPermission")
     private val onMapReadyCallback = OnMapReadyCallback {
         googleMap = it
-        onMapReadyListener?.invoke()
+
+        googleMap.setOnCameraMoveStartedListener(cameraMoveStartedListener)
+        googleMap.setOnCameraIdleListener(cameraMoveIdleListener)
+
         initLocation()
 
         googleMap.isMyLocationEnabled = true
@@ -63,6 +62,7 @@ class MainScreen : BaseScreenLocation<ScreenMainBinding>(R.layout.screen_main, S
     }
 
     fun navigateUserLocation(point: LatLng? = null) {
+        if (!this::googleMap.isInitialized) return
         if (point == null) {
             checkPermissionAndGetLastLocation {
                 googleMap.navigate(it.getLatLong())
@@ -72,21 +72,8 @@ class MainScreen : BaseScreenLocation<ScreenMainBinding>(R.layout.screen_main, S
         }
     }
 
-    fun onMapReady(f: EmptyBlock) {
-        onMapReadyListener = f
-    }
-
     fun setOnCameraIdleListener(f: SingleBlock<LatLng>) {
-        googleMap.setOnCameraMoveStartedListener(cameraMoveStartedListener)
-        googleMap.setOnCameraIdleListener(cameraMoveIdleListener)
         cameraCenterChangeListener = f
-    }
-
-    fun removeMapCameraMoveListeners() {
-        googleMap.setOnCameraMoveStartedListener(null)
-        googleMap.setOnCameraMoveListener(null)
-        googleMap.setOnCameraIdleListener(null)
-        cameraCenterChangeListener = null
     }
 
     private val cameraMoveStartedListener = OnCameraMoveStartedListener { reason ->
@@ -95,6 +82,15 @@ class MainScreen : BaseScreenLocation<ScreenMainBinding>(R.layout.screen_main, S
 
     private val cameraMoveIdleListener = OnCameraIdleListener {
         val center = googleMap.cameraPosition.target
-        cameraCenterChangeListener?.invoke(center)
+        if (center.latitude > 0 && center.longitude > 0)
+            cameraCenterChangeListener?.invoke(center)
+    }
+
+    fun getMapCenterPosition(): LatLng = googleMap.cameraPosition.target
+
+    override fun onDestroyScreenUI() {
+        googleMap.setOnCameraMoveStartedListener(null)
+        googleMap.setOnCameraIdleListener(null)
+        cameraCenterChangeListener = null
     }
 }

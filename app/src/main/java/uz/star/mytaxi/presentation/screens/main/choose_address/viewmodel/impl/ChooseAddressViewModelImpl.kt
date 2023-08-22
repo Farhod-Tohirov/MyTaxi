@@ -7,6 +7,7 @@ import uz.star.mytaxi.data.entities.address.AddressData
 import uz.star.mytaxi.domain.address.AddressesUseCase
 import uz.star.mytaxi.presentation.screens.main.choose_address.viewmodel.ChooseAddressViewModel
 import uz.star.mytaxi.utils.extensions.formatLocationData
+import uz.star.mytaxi.utils.helpers.AddressNotFoundException
 import javax.inject.Inject
 
 /**
@@ -19,6 +20,8 @@ class ChooseAddressViewModelImpl @Inject constructor(
 ) : ChooseAddressViewModel() {
 
     override val currentLocationName = MutableLiveData<String>()
+
+    override val selectedLocationName = MutableLiveData<String>()
 
     override val navigateConfirmOrderScreen = MutableLiveData<AddressData>()
 
@@ -41,7 +44,10 @@ class ChooseAddressViewModelImpl @Inject constructor(
         tryLoadData(shouldShowLoader = false) {
             if (currentLocation == null)
                 throw Exception("Choose current location first")
-            navigateConfirmOrderScreen.value = addressData
+
+            selectedLocationName.value = addressData?.addressName
+
+            navigateConfirmOrderScreen.value = addressData ?: throw AddressNotFoundException()
         }
     }
 }

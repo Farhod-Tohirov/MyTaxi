@@ -11,4 +11,8 @@ object Const {
     const val BaseUrl = BuildConfig.BASE_URL
 
     const val selectedAddress = "Selected address"
+
+    const val manualSelectedAddress = "Manual selected address"
+
+    const val chooseFromFavouriteAddress = "Choose from favourite address"
 }

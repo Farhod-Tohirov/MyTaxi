@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import uz.star.mytaxi.data.entities.address.SelectedAddressData
+import uz.star.mytaxi.data.entities.address.FavouriteAddressData
 import uz.star.mytaxi.databinding.ItemSelectedAddressBinding
 import uz.star.mytaxi.utils.helpers.SingleBlock
 
@@ -13,9 +13,9 @@ import uz.star.mytaxi.utils.helpers.SingleBlock
  * Created by Farhod Tohirov on 21-August-2023, 16:05
  **/
 
-class SelectedAddressAdapter : ListAdapter<SelectedAddressData, SelectedAddressAdapter.ViewHolder>(ItemAddressDiffUtilCallback) {
+class SelectedAddressAdapter : ListAdapter<FavouriteAddressData, SelectedAddressAdapter.ViewHolder>(ItemAddressDiffUtilCallback) {
 
-    private var addressClickListener: SingleBlock<SelectedAddressData>? = null
+    private var addressClickListener: SingleBlock<FavouriteAddressData>? = null
 
     inner class ViewHolder(private val binding: ItemSelectedAddressBinding) : RecyclerView.ViewHolder(binding.root) {
 
@@ -34,14 +34,14 @@ class SelectedAddressAdapter : ListAdapter<SelectedAddressData, SelectedAddressA
         }
     }
 
-    fun setOnAddressClickListener(f: SingleBlock<SelectedAddressData>) {
+    fun setOnAddressClickListener(f: SingleBlock<FavouriteAddressData>) {
         addressClickListener = f
     }
 
 
-    object ItemAddressDiffUtilCallback : DiffUtil.ItemCallback<SelectedAddressData>() {
-        override fun areItemsTheSame(oldItem: SelectedAddressData, newItem: SelectedAddressData) = oldItem.id == newItem.id
-        override fun areContentsTheSame(oldItem: SelectedAddressData, newItem: SelectedAddressData) = oldItem == newItem
+    object ItemAddressDiffUtilCallback : DiffUtil.ItemCallback<FavouriteAddressData>() {
+        override fun areItemsTheSame(oldItem: FavouriteAddressData, newItem: FavouriteAddressData) = oldItem.id == newItem.id
+        override fun areContentsTheSame(oldItem: FavouriteAddressData, newItem: FavouriteAddressData) = oldItem == newItem
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(

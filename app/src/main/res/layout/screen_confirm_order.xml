@@ -67,7 +67,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/currentAddress"
-                style="@style/TitleSemiBold.12"
+                style="@style/TitleBold.15"
                 android:layout_width="0dp"
                 android:layout_marginStart="4dp"
                 android:drawablePadding="6dp"
@@ -93,7 +93,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/selectedAddress"
-                style="@style/TitleSemiBold.12"
+                style="@style/TitleBold.15"
                 android:layout_width="0dp"
                 android:layout_marginStart="4dp"
                 android:drawablePadding="12dp"

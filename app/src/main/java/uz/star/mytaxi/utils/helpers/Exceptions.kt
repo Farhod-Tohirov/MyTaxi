@@ -14,4 +14,4 @@ sealed class ServerException(message: String) : IOException(message) {
     data class ServerErrorMessageException(val errorMessage: String) : ServerException(errorMessage)
 }
 
-class AddressNotFoundException : IOException("Address not found")
+class AddressNotFoundException(message: String = "Address not found") : IOException(message)
