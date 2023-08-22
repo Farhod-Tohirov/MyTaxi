@@ -27,7 +27,7 @@ data class AddressDataList(
 
 data class AddressListResponseData(
     @SerializedName("candidates")
-    val candidates: List<AddressResponseData>
+    val candidates: List<AddressResponseData>?
 )
 
 data class AddressResponseData(

@@ -8,7 +8,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.*
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.*
 import dagger.hilt.android.AndroidEntryPoint
 import uz.star.mytaxi.R
 import uz.star.mytaxi.databinding.ScreenMainBinding
@@ -37,10 +37,8 @@ class MainScreen : BaseScreenLocation<ScreenMainBinding>(R.layout.screen_main, S
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(onMapReadyCallback)
-
     }
 
-    @SuppressLint("MissingPermission")
     private val onMapReadyCallback = OnMapReadyCallback {
         googleMap = it
 
@@ -48,16 +46,17 @@ class MainScreen : BaseScreenLocation<ScreenMainBinding>(R.layout.screen_main, S
         googleMap.setOnCameraIdleListener(cameraMoveIdleListener)
 
         initLocation()
-
-        googleMap.isMyLocationEnabled = true
-        googleMap.uiSettings.isMyLocationButtonEnabled = false
     }
 
     override val locationCallback = object : LocationCallback() {
+        @SuppressLint("MissingPermission")
         override fun onLocationResult(locationResult: LocationResult) {
             val currentLocation = locationResult.getLatLang()
             navigateUserLocation(currentLocation)
             stopLocationUpdates()
+
+            googleMap.isMyLocationEnabled = true
+            googleMap.uiSettings.isMyLocationButtonEnabled = false
         }
     }
 
@@ -87,6 +86,21 @@ class MainScreen : BaseScreenLocation<ScreenMainBinding>(R.layout.screen_main, S
     }
 
     fun getMapCenterPosition(): LatLng = googleMap.cameraPosition.target
+
+    private var polyLine: Polyline? = null
+    fun drawPolyline(lineOptions: PolylineOptions) {
+        polyLine = googleMap.addPolyline(lineOptions)
+    }
+
+    private var marker = mutableListOf<Marker>()
+    fun addMarker(markerOptions: MarkerOptions) {
+        marker.add(googleMap.addMarker(markerOptions) ?: return)
+    }
+
+    fun clearMap() {
+        polyLine?.remove()
+        marker.forEach { it.remove() }
+    }
 
     override fun onDestroyScreenUI() {
         googleMap.setOnCameraMoveStartedListener(null)

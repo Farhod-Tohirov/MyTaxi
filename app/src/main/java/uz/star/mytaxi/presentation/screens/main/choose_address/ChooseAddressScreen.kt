@@ -46,15 +46,15 @@ class ChooseAddressScreen : BaseScreen<ScreenChooseAddressBinding>(R.layout.scre
             safeNavigate(ChooseAddressScreenDirections.actionMainScreenToChooseAddressManualScreen())
         }
 
-        setFragmentResultListener(Const.selectedAddress) { _, bundle ->
-            clearFragmentResultListener(Const.selectedAddress)
-            val selectedAddressData = bundle.parcelable<AddressData>(Const.selectedAddress)
-            viewModel.selectedLocationChanged(selectedAddressData)
-        }
-
         setFragmentResultListener(Const.manualSelectedAddress) { _, bundle ->
             clearFragmentResultListener(Const.manualSelectedAddress)
             val selectedAddressData = bundle.parcelable<AddressData>(Const.manualSelectedAddress)
+            viewModel.selectedLocationChanged(selectedAddressData)
+        }
+
+        setFragmentResultListener(Const.searchAddress) { _, bundle ->
+            clearFragmentResultListener(Const.searchAddress)
+            val selectedAddressData = bundle.parcelable<AddressData>(Const.searchAddress)
             viewModel.selectedLocationChanged(selectedAddressData)
         }
     }

@@ -22,7 +22,7 @@ object ResourceProvider {
             is ConnectException -> context.getString(R.string.no_internet_connection)
             is SocketTimeoutException -> context.getString(R.string.slow_internet)
             is UnknownHostException -> context.getString(R.string.no_internet_connection)
-            else -> context.getString(R.string.failure)
+            else -> throwable.message ?: throwable.localizedMessage ?: context.getString(R.string.failure)
         }
     }
 }

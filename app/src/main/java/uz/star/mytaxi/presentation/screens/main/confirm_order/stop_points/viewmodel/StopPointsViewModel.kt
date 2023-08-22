@@ -12,4 +12,7 @@ abstract class StopPointsViewModel : BaseViewModel() {
 
     abstract val stopPointsList: LiveData<List<AddressData>>
 
+    abstract val notifyItemsChanged: LiveData<Int>
+
+    abstract fun pointDeleteClick(addressData: AddressData)
 }

@@ -61,24 +61,38 @@ class SearchAddressScreen : BaseScreenDialog<ScreenSearchAddressBinding>(R.layou
             searchAddressShimmerAdapter
         )
 
-        /*binding.currentLocationSection.setOnFocusChangeListener { _, hasFocus ->
+        binding.currentLocationSection.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.currentLocationSection.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, R.drawable.ic_close, 0)
+                binding.currentLocationSection.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, 0, 0)
+                binding.clearCurrentSection.show()
                 binding.currentLocationMapButton.show()
             } else {
                 binding.currentLocationSection.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_location_red, 0, 0, 0)
+                binding.clearCurrentSection.hide()
                 binding.currentLocationMapButton.hide()
             }
-        }*/
+        }
 
         binding.selectedLocationSection.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
-                binding.selectedLocationSection.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, R.drawable.ic_close, 0)
+                binding.selectedLocationSection.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_search, 0, 0, 0)
+                binding.clearSelectedSection.show()
                 binding.selectedLocationMapButton.show()
             } else {
                 binding.selectedLocationSection.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_location_blue, 0, 0, 0)
+                binding.clearSelectedSection.hide()
                 binding.selectedLocationMapButton.hide()
             }
+        }
+
+        binding.clearSelectedSection.setOnClickListener {
+            if (!binding.selectedLocationSection.text.isNullOrEmpty())
+                binding.selectedLocationSection.setText("")
+        }
+
+        binding.clearCurrentSection.setOnClickListener {
+            if (!binding.currentLocationSection.text.isNullOrEmpty())
+                binding.currentLocationSection.setText("")
         }
 
         binding.selectedLocationSection
@@ -119,7 +133,7 @@ class SearchAddressScreen : BaseScreenDialog<ScreenSearchAddressBinding>(R.layou
     }
 
     private fun setBackStackDataAndClose(addressData: AddressData) {
-        setFragmentResult(Const.selectedAddress, result = bundleOf(Const.selectedAddress to addressData))
+        setFragmentResult(Const.searchAddress, result = bundleOf(Const.searchAddress to addressData))
         closeScreen()
     }
 

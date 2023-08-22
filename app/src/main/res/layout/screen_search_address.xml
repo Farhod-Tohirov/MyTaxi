@@ -53,6 +53,21 @@
         tools:text="Фидокор 7" />
 
     <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/clearCurrentSection"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:selectableItemBackgroundBorderless"
+        android:elevation="5dp"
+        android:padding="4dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/currentLocationSection"
+        app:layout_constraintRight_toRightOf="@id/currentLocationSection"
+        app:layout_constraintTop_toTopOf="@id/currentLocationSection"
+        app:srcCompat="@drawable/ic_close"
+        tools:visibility="visible" />
+
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/currentLocationMapButton"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -84,13 +99,28 @@
         android:imeOptions="actionDone"
         android:maxLines="1"
         android:paddingStart="16dp"
-        android:paddingEnd="8dp"
+        android:paddingEnd="32dp"
         android:singleLine="true"
         android:textColor="@color/black_text_color"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/selectedLocationMapButton"
         app:layout_constraintTop_toBottomOf="@id/currentLocationSection"
         tools:text="123" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/clearSelectedSection"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:selectableItemBackgroundBorderless"
+        android:elevation="5dp"
+        android:padding="4dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/selectedLocationSection"
+        app:layout_constraintRight_toRightOf="@id/selectedLocationSection"
+        app:layout_constraintTop_toTopOf="@id/selectedLocationSection"
+        app:srcCompat="@drawable/ic_close"
+        tools:visibility="visible" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/selectedLocationMapButton"

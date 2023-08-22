@@ -4,6 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import uz.star.mytaxi.data.entities.address.AddressListResponseData
+import uz.star.mytaxi.data.entities.address.PolylineResponseData
 import uz.star.mytaxi.data.entities.address.SingleAddressObjectResponseData
 import uz.star.mytaxi.data.entities.base.BaseResponseData
 
@@ -23,4 +24,7 @@ interface AddressesApi {
         @Query("lng") lng: Double,
         @Query("query") name: String
     ): BaseResponseData<AddressListResponseData>
+
+    @GET("v1/route")
+    suspend fun getRouteData(@Query("points") points: String): BaseResponseData<PolylineResponseData>
 }

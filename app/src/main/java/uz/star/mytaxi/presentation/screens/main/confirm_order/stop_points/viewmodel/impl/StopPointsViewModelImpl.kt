@@ -19,6 +19,18 @@ class StopPointsViewModelImpl @Inject constructor(
 ) : StopPointsViewModel() {
 
     private val args = StopPointsScreenArgs.fromSavedStateHandle(savedStateHandle)
+
     override val stopPointsList = MutableLiveData<List<AddressData>>(args.addresses?.list)
 
+    override val notifyItemsChanged = MutableLiveData<Int>()
+
+    override fun pointDeleteClick(addressData: AddressData) {
+        tryLoadData(shouldShowLoader = false) {
+            if (stopPointsList.value?.size == 1) throw Exception("At least one point should be saved")
+            stopPointsList.value = stopPointsList.value?.toMutableList()?.apply {
+                remove(addressData)
+            }
+            notifyItemsChanged.value = addressData.addressId ?: 0
+        }
+    }
 }

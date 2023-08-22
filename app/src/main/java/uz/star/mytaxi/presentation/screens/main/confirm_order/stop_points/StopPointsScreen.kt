@@ -1,5 +1,7 @@
 package uz.star.mytaxi.presentation.screens.main.confirm_order.stop_points
 
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
@@ -12,6 +14,7 @@ import uz.star.mytaxi.presentation.adapters.stop_point.StopPointsAdapter
 import uz.star.mytaxi.presentation.screens.base.BaseScreenDialog
 import uz.star.mytaxi.presentation.screens.main.confirm_order.stop_points.viewmodel.StopPointsViewModel
 import uz.star.mytaxi.presentation.screens.main.confirm_order.stop_points.viewmodel.impl.StopPointsViewModelImpl
+import uz.star.mytaxi.utils.helpers.Const
 import uz.star.mytaxi.utils.helpers.ItemMoveCallback
 
 /**
@@ -36,6 +39,8 @@ class StopPointsScreen : BaseScreenDialog<ScreenStopPointsBinding>(R.layout.scre
 
         binding.stopPointsList.adapter = stopPointsAdapter
 
+        stopPointsAdapter.setOnDeleteButtonClickListener(viewModel::pointDeleteClick)
+
         binding.addPointButton.setOnClickListener {
             safeNavigate(StopPointsScreenDirections.actionStopPointsScreenToAddStopPointScreen(currentLocation = args.currentLocation))
         }
@@ -43,6 +48,11 @@ class StopPointsScreen : BaseScreenDialog<ScreenStopPointsBinding>(R.layout.scre
 
     override fun loadObservers() {
         viewModel.stopPointsList.observe(this, stopPointsListObserver)
+        viewModel.notifyItemsChanged.observe(this, notifyItemsChangesObserver)
+    }
+
+    private val notifyItemsChangesObserver = Observer<Int> {
+        setFragmentResult(Const.stopPointsRemoved, bundleOf(Const.stopPointsRemoved to it))
     }
 
     private val stopPointsListObserver = Observer<List<AddressData>> {

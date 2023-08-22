@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:background="@drawable/mock_google_map_image"
     android:layout_height="match_parent"
     android:layout_gravity="bottom">
 
@@ -21,7 +23,7 @@
         android:layout_width="38dp"
         android:layout_height="60dp"
         android:layout_gravity="center"
-        android:layout_marginBottom="55dp"
+        android:layout_marginBottom="26dp"
         android:adjustViewBounds="true"
         app:srcCompat="@drawable/ic_map_pin" />
 
@@ -40,6 +42,9 @@
 
     <include
         android:id="@+id/chooseAddressPanel"
-        layout="@layout/layout_choose_address" />
+        layout="@layout/layout_choose_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>

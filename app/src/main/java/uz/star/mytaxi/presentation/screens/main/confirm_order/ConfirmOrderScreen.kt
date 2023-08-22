@@ -1,9 +1,13 @@
 package uz.star.mytaxi.presentation.screens.main.confirm_order
 
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.clearFragmentResultListener
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.PolylineOptions
 import dagger.hilt.android.AndroidEntryPoint
 import uz.star.mytaxi.R
 import uz.star.mytaxi.data.entities.address.AddressData
@@ -12,8 +16,11 @@ import uz.star.mytaxi.data.entities.confirm_order.CarOrderTypeData
 import uz.star.mytaxi.databinding.ScreenConfirmOrderBinding
 import uz.star.mytaxi.presentation.adapters.confirm_order.CarOrderTypesAdapter
 import uz.star.mytaxi.presentation.screens.base.BaseScreen
+import uz.star.mytaxi.presentation.screens.main.MainScreen
 import uz.star.mytaxi.presentation.screens.main.confirm_order.viewmodel.ConfirmOrderViewModel
 import uz.star.mytaxi.presentation.screens.main.confirm_order.viewmodel.impl.ConfirmOrderViewModelImpl
+import uz.star.mytaxi.utils.extensions.bitmapDescriptorFromVector
+import uz.star.mytaxi.utils.extensions.dpFloat
 import uz.star.mytaxi.utils.extensions.parcelable
 import uz.star.mytaxi.utils.helpers.Const
 
@@ -27,6 +34,8 @@ class ConfirmOrderScreen : BaseScreen<ScreenConfirmOrderBinding>(R.layout.screen
     override val viewModel: ConfirmOrderViewModel by viewModels<ConfirmOrderViewModelImpl>()
 
     override val recyclerViewIdList = listOf(R.id.orderTypeList)
+
+    private val parentScreen: MainScreen by lazy { requireParentFragment().requireParentFragment() as MainScreen }
 
     private val carOrderTypesAdapter = CarOrderTypesAdapter()
 
@@ -57,23 +66,40 @@ class ConfirmOrderScreen : BaseScreen<ScreenConfirmOrderBinding>(R.layout.screen
                 )
             )
         }
+
+        setFragmentResultListener(Const.stopPointsRemoved) { _, bundle ->
+            val removedId = bundle.getInt(Const.stopPointsRemoved)
+            viewModel.stopPointRemoved(removedId)
+        }
     }
 
     override fun loadObservers() {
         viewModel.orderTypesList.observe(this, orderTypesListObserver)
         viewModel.currentAddressData.observe(this, currentAddressDataObserver)
         viewModel.selectedAddressesData.observe(this, selectedAddressesDataObserver)
+        viewModel.pathBetweenLocations.observe(this, pathBetweenLocationsObserver)
     }
 
-    private val currentAddressDataObserver = Observer<AddressData> {
-        binding.currentAddress.text = it.addressName
+    private val currentAddressDataObserver = Observer<AddressData> { addressData ->
+        binding.currentAddress.text = addressData.addressName
+        addressData.location?.let {
+            val markerOptions = MarkerOptions().position(LatLng(it.lat, it.long))
+            markerOptions.icon(bitmapDescriptorFromVector(R.drawable.ic_location_red))
+            parentScreen.addMarker(markerOptions)
+        }
     }
 
-    private val selectedAddressesDataObserver = Observer<List<AddressData>> {
-        if (it.size == 1) {
-            binding.selectedAddress.text = it.first().addressName
+    private val selectedAddressesDataObserver = Observer<List<AddressData>> { addressesList ->
+        if (addressesList.size == 1) {
+            binding.selectedAddress.text = addressesList.first().addressName
         } else {
-            binding.selectedAddress.text = getString(R.string.address_count, it.size)
+            binding.selectedAddress.text = getString(R.string.address_count, addressesList.size)
+        }
+        val addressData = addressesList.firstOrNull() ?: return@Observer
+        addressData.location?.let {
+            val markerOptions = MarkerOptions().position(LatLng(it.lat, it.long))
+            markerOptions.icon(bitmapDescriptorFromVector(R.drawable.ic_location_blue))
+            parentScreen.addMarker(markerOptions)
         }
     }
 
@@ -81,7 +107,18 @@ class ConfirmOrderScreen : BaseScreen<ScreenConfirmOrderBinding>(R.layout.screen
         carOrderTypesAdapter.submitList(it)
     }
 
+    private val pathBetweenLocationsObserver = Observer<List<LatLng>> {
+        val lineOptions = PolylineOptions()
+        lineOptions.addAll(it)
+        lineOptions.color(ResourcesCompat.getColor(resources, R.color.poly_line_color, null))
+        lineOptions.width(3.dpFloat)
+        lineOptions.geodesic(true)
+        parentScreen.drawPolyline(lineOptions)
+    }
+
     override fun onDestroyScreenUI() {
+        clearFragmentResultListener(Const.stopPointsRemoved)
         clearFragmentResultListener(Const.selectedAddress)
+        parentScreen.clearMap()
     }
 }

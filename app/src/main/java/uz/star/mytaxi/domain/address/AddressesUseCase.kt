@@ -18,4 +18,6 @@ interface AddressesUseCase {
     suspend fun getFavouriteAddresses(): List<FavouriteAddressData>
 
     suspend fun getOrderTypes(): List<CarOrderTypeData>
+
+    suspend fun getPointsBetweenLocations(from: LocationData, to: LocationData): List<LocationData>
 }

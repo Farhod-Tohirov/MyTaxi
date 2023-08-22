@@ -17,13 +17,13 @@ import java.util.*
 
 class StopPointsAdapter : ListAdapter<AddressData, StopPointsAdapter.ViewHolder>(ItemAddressDiffUtilCallback), ItemMoveCallback.ItemTouchHelperContract {
 
-    private var addressClickListener: SingleBlock<AddressData>? = null
+    private var deleteButtonClickListener: SingleBlock<AddressData>? = null
     private var data = mutableListOf<AddressData>()
 
     inner class ViewHolder(private val binding: ItemStopPointBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener { addressClickListener?.invoke(getItem(bindingAdapterPosition)) }
+            binding.deleteButton.setOnClickListener { deleteButtonClickListener?.invoke(getItem(bindingAdapterPosition)) }
         }
 
         fun bind() {
@@ -35,8 +35,8 @@ class StopPointsAdapter : ListAdapter<AddressData, StopPointsAdapter.ViewHolder>
         }
     }
 
-    fun setOnAddressClickListener(f: SingleBlock<AddressData>) {
-        addressClickListener = f
+    fun setOnDeleteButtonClickListener(f: SingleBlock<AddressData>) {
+        deleteButtonClickListener = f
     }
 
     fun submitData(list: List<AddressData>) {

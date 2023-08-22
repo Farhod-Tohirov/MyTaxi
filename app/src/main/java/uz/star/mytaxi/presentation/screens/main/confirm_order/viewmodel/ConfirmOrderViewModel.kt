@@ -1,6 +1,7 @@
 package uz.star.mytaxi.presentation.screens.main.confirm_order.viewmodel
 
 import androidx.lifecycle.LiveData
+import com.google.android.gms.maps.model.LatLng
 import uz.star.mytaxi.data.entities.address.AddressData
 import uz.star.mytaxi.data.entities.confirm_order.CarOrderTypeData
 import uz.star.mytaxi.presentation.screens.base.BaseViewModel
@@ -17,11 +18,17 @@ abstract class ConfirmOrderViewModel : BaseViewModel() {
 
     abstract val orderTypesList: LiveData<List<CarOrderTypeData>>
 
+    abstract val pathBetweenLocations: LiveData<List<LatLng>>
+
     abstract fun loadChosenAddresses()
 
     abstract fun getOrderTypes()
 
+    abstract fun loadLocationPoints()
+
     abstract fun carOrderTypeSelected(cardOrderTypeData: CarOrderTypeData)
 
     abstract fun addStopPoint(addressData: AddressData)
+
+    abstract fun stopPointRemoved(removedId: Int)
 }

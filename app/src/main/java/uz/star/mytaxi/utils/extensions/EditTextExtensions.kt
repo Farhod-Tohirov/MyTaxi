@@ -13,13 +13,13 @@ import uz.star.mytaxi.utils.helpers.EmptyBlock
 
 @SuppressLint("ClickableViewAccessibility")
 fun EditText.setOnDrawableRightClickListener(callBack: EmptyBlock) {
-    setOnTouchListener(OnTouchListener { v, event ->
+    setOnTouchListener(OnTouchListener { _, event ->
         val DRAWABLE_LEFT = 0
         val DRAWABLE_TOP = 1
         val DRAWABLE_RIGHT = 2
         val DRAWABLE_BOTTOM = 3
         if (event.action == MotionEvent.ACTION_UP) {
-            if (event.rawX >= getRight() - getCompoundDrawables().get(DRAWABLE_RIGHT).getBounds().width()) {
+            if (event.rawX >= right - compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
                 callBack()
                 return@OnTouchListener true
             }

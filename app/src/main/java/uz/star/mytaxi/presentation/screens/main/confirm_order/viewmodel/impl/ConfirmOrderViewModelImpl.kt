@@ -2,6 +2,7 @@ package uz.star.mytaxi.presentation.screens.main.confirm_order.viewmodel.impl
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.lifecycle.HiltViewModel
 import uz.star.mytaxi.data.entities.address.AddressData
 import uz.star.mytaxi.data.entities.confirm_order.CarOrderTypeData
@@ -23,12 +24,14 @@ class ConfirmOrderViewModelImpl @Inject constructor(
     override val orderTypesList = MutableLiveData<List<CarOrderTypeData>>()
     override val currentAddressData = MutableLiveData<AddressData>()
     override val selectedAddressesData = MutableLiveData<List<AddressData>>()
+    override val pathBetweenLocations = MutableLiveData<List<LatLng>>()
 
     private val args = ConfirmOrderScreenArgs.fromSavedStateHandle(savedStateHandle)
 
     init {
         loadChosenAddresses()
         getOrderTypes()
+        loadLocationPoints()
     }
 
     override fun loadChosenAddresses() {
@@ -49,6 +52,17 @@ class ConfirmOrderViewModelImpl @Inject constructor(
         }
     }
 
+    override fun loadLocationPoints() {
+        tryLoadData {
+            onIOContext {
+                val polylinePoints = addressesUseCase.getPointsBetweenLocations(from = args.currentAddress.location ?: return@onIOContext, to = args.selectedAddress.location ?: return@onIOContext)
+                onUIContext {
+                    pathBetweenLocations.value = polylinePoints.map { LatLng(it.lat, it.long) }
+                }
+            }
+        }
+    }
+
     override fun carOrderTypeSelected(cardOrderTypeData: CarOrderTypeData) {
         tryLoadData(shouldShowLoader = false) {
             orderTypesList.value = orderTypesList.value?.map { it.copy(isSelected = it.id == cardOrderTypeData.id) }
@@ -59,6 +73,14 @@ class ConfirmOrderViewModelImpl @Inject constructor(
         tryLoadData(shouldShowLoader = false) {
             selectedAddressesData.value = selectedAddressesData.value?.toMutableList()?.apply {
                 add(addressData)
+            }
+        }
+    }
+
+    override fun stopPointRemoved(removedId: Int) {
+        tryLoadData(shouldShowLoader = false) {
+            selectedAddressesData.value = selectedAddressesData.value?.toMutableList()?.apply {
+                removeAll { it.addressId == removedId }
             }
         }
     }
