@@ -16,6 +16,7 @@ import uz.star.mytaxi.presentation.screens.base.BaseScreenLocation
 import uz.star.mytaxi.presentation.screens.main.viewmodel.MainViewModel
 import uz.star.mytaxi.presentation.screens.main.viewmodel.impl.MainViewModelImpl
 import uz.star.mytaxi.utils.extensions.*
+import uz.star.mytaxi.utils.helpers.Const
 import uz.star.mytaxi.utils.helpers.SingleBlock
 
 /**
@@ -44,6 +45,8 @@ class MainScreen : BaseScreenLocation<ScreenMainBinding>(R.layout.screen_main, S
 
         googleMap.setOnCameraMoveStartedListener(cameraMoveStartedListener)
         googleMap.setOnCameraIdleListener(cameraMoveIdleListener)
+
+        googleMap.navigate(LatLng(Const.TASHKENT_LAT, Const.TASHKENT_LONG), 11f)
 
         initLocation()
     }

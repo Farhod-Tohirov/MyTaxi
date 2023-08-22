@@ -24,7 +24,7 @@ class SplashViewModelImpl @Inject constructor(
 
     override fun startApp() {
         tryLoadData(shouldShowLoader = false) {
-            delay(2.seconds)
+            delay(1.seconds)
             navigateMainScreen.value = Unit
         }
     }
