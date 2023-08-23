@@ -75,8 +75,8 @@ class ConfirmOrderScreen : BaseScreen<ScreenConfirmOrderBinding>(R.layout.screen
 
     override fun loadObservers() {
         viewModel.orderTypesList.observe(this, orderTypesListObserver)
-        viewModel.currentAddressData.observe(this, currentAddressDataObserver)
-        viewModel.selectedAddressesData.observe(this, selectedAddressesDataObserver)
+        viewModel.currentAddressData.observe(viewLifecycleOwner, currentAddressDataObserver)
+        viewModel.selectedAddressesData.observe(viewLifecycleOwner, selectedAddressesDataObserver)
         viewModel.pathBetweenLocations.observe(this, pathBetweenLocationsObserver)
     }
 
