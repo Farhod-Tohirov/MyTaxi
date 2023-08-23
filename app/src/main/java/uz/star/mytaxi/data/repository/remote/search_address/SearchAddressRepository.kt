@@ -1,7 +1,6 @@
-package uz.star.mytaxi.data.repository.search_address
+package uz.star.mytaxi.data.repository.remote.search_address
 
 import uz.star.mytaxi.data.entities.address.AddressData
-import uz.star.mytaxi.data.entities.address.FavouriteAddressData
 import uz.star.mytaxi.data.entities.address.LocationData
 import uz.star.mytaxi.data.entities.address.PolylineData
 
@@ -14,8 +13,6 @@ interface SearchAddressRepository {
     suspend fun searchSingleLocationAddress(locationData: LocationData): AddressData
 
     suspend fun searchAddressByName(name: String, locationData: LocationData, limit: Int): List<AddressData>
-
-    suspend fun getFavouriteAddressList(): List<FavouriteAddressData>
 
     suspend fun getPointsBetweenLocations(from: LocationData, to: LocationData): PolylineData
 }

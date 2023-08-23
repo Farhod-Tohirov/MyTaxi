@@ -16,3 +16,10 @@ interface DataRequester<T, S> {
 }
 
 fun <T : DataRequester<T, S>, S> T.mapToRequest() = this.mapToRequest()
+
+
+interface DataEntityConverter<T, S> {
+    fun T.mapToEntity(): S
+}
+
+fun <T : DataEntityConverter<T, S>, S> T.mapToEntity() = this.mapToEntity()

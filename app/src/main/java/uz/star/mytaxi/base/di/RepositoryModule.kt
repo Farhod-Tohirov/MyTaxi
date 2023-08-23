@@ -4,8 +4,10 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import uz.star.mytaxi.data.repository.search_address.SearchAddressRepository
-import uz.star.mytaxi.data.repository.search_address.impl.SearchAddressRepositoryImpl
+import uz.star.mytaxi.data.repository.local.AppLocalRepository
+import uz.star.mytaxi.data.repository.local.impl.AppLocalRepositoryImpl
+import uz.star.mytaxi.data.repository.remote.search_address.SearchAddressRepository
+import uz.star.mytaxi.data.repository.remote.search_address.impl.SearchAddressRepositoryImpl
 import javax.inject.Singleton
 
 /**
@@ -19,4 +21,8 @@ interface RepositoryModule {
     @Binds
     @Singleton
     fun getSearchAddressRepository(repo: SearchAddressRepositoryImpl): SearchAddressRepository
+
+    @Binds
+    @Singleton
+    fun getAppLocalRepository(repo: AppLocalRepositoryImpl): AppLocalRepository
 }

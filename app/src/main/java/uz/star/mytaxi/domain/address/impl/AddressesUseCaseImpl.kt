@@ -1,10 +1,12 @@
 package uz.star.mytaxi.domain.address.impl
 
+import uz.star.mytaxi.R
 import uz.star.mytaxi.data.entities.address.AddressData
 import uz.star.mytaxi.data.entities.address.FavouriteAddressData
 import uz.star.mytaxi.data.entities.address.LocationData
 import uz.star.mytaxi.data.entities.confirm_order.CarOrderTypeData
-import uz.star.mytaxi.data.repository.search_address.SearchAddressRepository
+import uz.star.mytaxi.data.repository.local.AppLocalRepository
+import uz.star.mytaxi.data.repository.remote.search_address.SearchAddressRepository
 import uz.star.mytaxi.domain.address.AddressesUseCase
 import uz.star.mytaxi.utils.helpers.FakeData
 import javax.inject.Inject
@@ -14,7 +16,7 @@ import javax.inject.Inject
  **/
 
 class AddressesUseCaseImpl @Inject constructor(
-    private val remoteRepository: SearchAddressRepository
+    private val remoteRepository: SearchAddressRepository, private val appLocalRepository: AppLocalRepository
 ) : AddressesUseCase {
 
     override suspend fun searchSingleLocationAddress(locationData: LocationData): AddressData {
@@ -23,11 +25,20 @@ class AddressesUseCaseImpl @Inject constructor(
         return address
     }
 
-    override suspend fun getAddressesByName(locationName: String, locationData: LocationData): List<AddressData> =
-        remoteRepository.searchAddressByName(name = locationName, locationData = locationData, limit = 20)
+    override suspend fun getAddressesByName(locationName: String, locationData: LocationData): List<AddressData> = remoteRepository.searchAddressByName(name = locationName, locationData = locationData, limit = 20)
 
-    override suspend fun getFavouriteAddresses(): List<FavouriteAddressData> =
-        remoteRepository.getFavouriteAddressList()
+    override suspend fun getFavouriteAddresses(): List<FavouriteAddressData> {
+        var favouriteAddressList = appLocalRepository.getFavouriteAddressList()
+        if (favouriteAddressList.isEmpty()) {
+            favouriteAddressList = listOf(
+                FavouriteAddressData(0, "Гостиница Россия", "улица  Мирабад 29, Ташкент ", R.drawable.ic_home, LocationData(41.304887, 69.227123)),
+                FavouriteAddressData(1, "Hotel Marwa Tashkent Pool&Spa", "улица  Мирабад 29, Ташкент ", R.drawable.ic_suitcase, LocationData(41.308691, 69.240169)),
+                FavouriteAddressData(2, "Chorsu Bazaar", "улица  Мирабад 29, Ташкент ", R.drawable.ic_bookmark_grey, LocationData(41.329751, 69.225999)),
+            )
+            appLocalRepository.insertFavouriteAddressList(favouriteAddressList = favouriteAddressList)
+        }
+        return favouriteAddressList
+    }
 
     override suspend fun getOrderTypes(): List<CarOrderTypeData> = FakeData.carOrderTypesList
 
