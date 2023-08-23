@@ -14,6 +14,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import uz.star.mytaxi.data.local.LocalStorage
 import uz.star.mytaxi.utils.extensions.showLog
 import uz.star.mytaxi.utils.helpers.Const
+import uz.star.mytaxi.utils.helpers.network.ServerExceptionFactory
 import javax.inject.Singleton
 
 /**
@@ -50,8 +51,8 @@ class RetrofitModule {
         .addInterceptor {
             try {
                 val response = it.proceed(it.request())
-//                if (response.code >= 400 && response.code != 401)
-//                    throw ServerExceptionFactory.createFromResponse(response = response)
+                if (response.code >= 400) // check server exceptions here.
+                    throw ServerExceptionFactory.createFromResponse(response = response)
                 response
             } catch (e: Exception) {
                 showLog("EXCEPTION = $e")

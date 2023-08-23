@@ -13,6 +13,7 @@ object ServerExceptionFactory {
             405 -> ServerException.UserNotValidException()
             500 -> ServerException.ServerFaultException()
             else -> {
+                // TODO: Parse server error here and return data as ServerException
                 ServerException.UnknownErrorException(response.body?.charStream()?.toString() ?: "")
             }
         }
